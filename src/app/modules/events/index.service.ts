@@ -15,7 +15,7 @@ export class EventService {
 
   async create(event: EventDTO) {
     await this.eventModel.create({
-      title: 'ok',
+      
     });
 
     this.events.push(event);

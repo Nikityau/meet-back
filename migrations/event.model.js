@@ -17,7 +17,7 @@ module.exports = {
         allowNull: false,
       },
       userId: {
-
+        type: Sequelize.UUID
       },
       createdAt: {
         allowNull: false,

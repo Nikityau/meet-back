@@ -8,10 +8,12 @@ import {
 
 import { Users } from './user';
 
+import { EventDTO } from '../dto/event.dto';
+
 @Table({
   tableName: 'Events',
 })
-export class Events extends Model {
+export class Events extends Model<EventDTO> {
   @Column({
     type: DataType.UUID,
     primaryKey: true,
@@ -23,7 +25,4 @@ export class Events extends Model {
     type: DataType.STRING,
   })
   title;
-
-  @BelongsTo(() => Users)
-  userId;
 }

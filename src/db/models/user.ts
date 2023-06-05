@@ -22,7 +22,4 @@ export class Users extends Model {
     type: DataType.STRING,
   })
   surname;
-
-  @HasMany(() => Events)
-  events;
 }
