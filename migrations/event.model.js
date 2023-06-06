@@ -5,8 +5,8 @@ module.exports = {
     await queryInterface.createTable('Events', {
       id: {
         type: Sequelize.UUID,
-        primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
       },
       title: {
         type: Sequelize.STRING,
@@ -16,8 +16,37 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      userId: {
-        type: Sequelize.UUID
+      previewImg: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      mainImg: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      startDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      endDate: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      startTime: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      endTime: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      place: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      isArchive: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

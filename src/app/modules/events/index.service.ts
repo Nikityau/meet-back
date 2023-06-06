@@ -2,21 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 import { EventDTO } from './event.dto';
-import { Events } from 'src/db/models/event';
+import { EventsModel } from 'src/db/models/event.model';
 
 @Injectable()
 export class EventService {
   private events: EventDTO[] = [];
 
   constructor(
-    @InjectModel(Events)
-    private eventModel: typeof Events,
+    @InjectModel(EventsModel)
+    private eventModel: typeof EventsModel,
   ) {}
 
   async create(event: EventDTO) {
-    await this.eventModel.create({
-      
-    });
+    await this.eventModel.create({});
 
     this.events.push(event);
   }
