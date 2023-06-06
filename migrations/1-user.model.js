@@ -8,6 +8,10 @@ module.exports = {
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
       },
+      password: {
+        type: Sequelize.STRING,
+    allowNull: false,
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -21,34 +25,34 @@ module.exports = {
         allowNull: true,
       },
       birthDay: {
-        type: DataType.DATE,
+        type: Sequelize.DATE,
         allowNull: false,
       },
       isReal: {
-        type: DataType.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       image: {
-        type: DataType.STRING,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       role: {
-        type: DataType.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
         defaultValue: 'user',
       },
       email: {
-        type: DataType.STRING,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       isNotify: {
-        type: DataType.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
       canMessage: {
-        type: DataType.BOOLEAN,
+        type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
       },

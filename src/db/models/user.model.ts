@@ -2,6 +2,7 @@ import { Column, Model, DataType, Table, HasMany } from 'sequelize-typescript';
 
 import { UserDTO } from '../dto/user.dto';
 import { BaseModel } from './base.model';
+import { CommentModel } from './comment.model';
 
 @Table({
   tableName: 'Users',
@@ -75,4 +76,7 @@ export class UsersModel extends BaseModel<UserDTO> {
     defaultValue: true,
   })
   canMessage;
+
+  @HasMany(() => CommentModel, 'id')
+  commentId;
 }

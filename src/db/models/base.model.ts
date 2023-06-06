@@ -5,6 +5,7 @@ export class BaseModel<T> extends Model<T> {
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
     primaryKey: true,
+    allowNull: false,
   })
   id;
 }

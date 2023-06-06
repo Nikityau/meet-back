@@ -5,6 +5,7 @@ import { EventsModel } from './models/event.model';
 import { UsersModel } from './models/user.model';
 import { ImgModel } from './models/img.model';
 import { TagModel } from './models/tag.model';
+import { CommentModel } from './models/comment.model';
 
 const DB = {
   HOST: process.env.DB_HOST,
@@ -24,7 +25,7 @@ const DB = {
       password: DB.PASSWORD,
       database: DB.DB,
       synchronize: true,
-      models: [EventsModel, UsersModel, ImgModel, TagModel],
+      models: [EventsModel, UsersModel, ImgModel, TagModel, CommentModel],
     }),
   ],
 })
