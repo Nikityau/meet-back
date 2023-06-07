@@ -1,7 +1,11 @@
-import { Column, Model, DataType, Table } from 'sequelize-typescript';
+import { Column, Model, DataType, Table, HasMany } from 'sequelize-typescript';
 
 import { EventDTO } from '../dto/event.dto';
+
 import { BaseModel } from './base.model';
+import { CommentModel } from './comment.model';
+import { OrganizerModel } from './organizer.model';
+import { ImgModel } from './img.model';
 
 @Table({
   tableName: 'Events',
@@ -66,4 +70,13 @@ export class EventsModel extends BaseModel<EventDTO> {
     defaultValue: false,
   })
   isArchive;
+
+  @HasMany(() => CommentModel, 'eventId')
+  comments;
+
+  @HasMany(() => OrganizerModel, 'eventId')
+  organizers;
+
+  @HasMany(() => ImgModel, 'eventId')
+  images;
 }

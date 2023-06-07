@@ -1,6 +1,5 @@
 import { UserEventDTO } from './user-event.dto';
 
-export class CommentDTO extends UserEventDTO {
+export class OrganizerDTO extends UserEventDTO {
   id: string;
-  comment: string;
 }

@@ -77,6 +77,6 @@ export class UsersModel extends BaseModel<UserDTO> {
   })
   canMessage;
 
-  @HasMany(() => CommentModel, 'id')
-  commentId;
+  @HasMany(() => CommentModel, 'userId')
+  comments;
 }

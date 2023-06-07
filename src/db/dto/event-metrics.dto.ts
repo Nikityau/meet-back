@@ -1,7 +1,7 @@
-export class EventMetricsDTO {
+import { UserEventDTO } from './user-event.dto';
+
+export class EventMetricsDTO extends UserEventDTO {
   id: string;
-  eventId: string;
-  userId: string;
   isViewed: boolean;
   isLiked: boolean;
 }
