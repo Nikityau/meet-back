@@ -3,8 +3,11 @@ import {
   Get,
   Post,
   Body,
+  Query,
   HttpException,
   HttpStatus,
+  Param,
+  ParseIntPipe,
 } from '@nestjs/common';
 
 import { EventService } from './index.service';
@@ -21,7 +24,10 @@ export class EventsController {
   }
 
   @Get('all')
-  async getAll() {
-    return await this.eventService.getAll();
+  async getAll(@Query('id', ParseIntPipe) id: number) {
+    console.log(id);
+    return {
+      status: 'ok',
+    };
   }
 }
