@@ -1,14 +1,8 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 
-import { EventsModel } from './models/event.model';
-import { UsersModel } from './models/user.model';
-import { ImgModel } from './models/img.model';
-import { TagModel } from './models/tag.model';
-import { CommentModel } from './models/comment.model';
-import { OrganizerModel } from './models/organizer.model';
-import { EventMetricsModel } from './models/event-metrics.model';
-import { ArchiveEventMetricsModel } from './models/archive-event-metrics.model';
+import { UserModel } from './models/user.model';
+
 
 const DB = {
   HOST: process.env.DB_HOST,
@@ -29,14 +23,7 @@ const DB = {
       database: DB.DB,
       synchronize: true,
       models: [
-        EventsModel,
-        UsersModel,
-        ImgModel,
-        TagModel,
-        CommentModel,
-        OrganizerModel,
-        EventMetricsModel,
-        ArchiveEventMetricsModel,
+          UserModel
       ],
     }),
   ],

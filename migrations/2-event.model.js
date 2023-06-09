@@ -32,14 +32,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      startTime: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      endTime: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       place: {
         type: Sequelize.STRING,
         allowNull: false,

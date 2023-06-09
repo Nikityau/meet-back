@@ -1,82 +1,69 @@
-import { Column, Model, DataType, Table, HasMany } from 'sequelize-typescript';
+import { DataType, Table, Column } from "sequelize-typescript";
 
-import { UserDTO } from '../dto/user.dto';
-import { BaseModel } from './base.model';
-import { CommentModel } from './comment.model';
+import { BaseModel } from "./base.model";
+
+import { UserDTO } from "../dto/user.dto";
+
 
 @Table({
-  tableName: 'Users',
+    tableName: 'Users'
 })
-export class UsersModel extends BaseModel<UserDTO> {
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  name;
+export class UserModel extends BaseModel<UserDTO> {
+    @Column({
+        type: DataType.CHAR(30),
+        allowNull: false,
+    })
+    name;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  surname;
+    @Column({
+        type: DataType.CHAR(30),
+        allowNull: false,
+    })
+    surname;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  gender;
+    @Column({
+        type: DataType.CHAR(30),
+        allowNull: true,
+        defaultValue: null,
+    })
+    patronymic;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  birthDay;
+    @Column({
+        type: DataType.ENUM('male', 'female'),
+        allowNull: false,
+    })
+    gender;
 
-  @Column({
-    type: DataType.BOOLEAN,
-    allowNull: false,
-    defaultValue: true,
-  })
-  isReal;
+    @Column({
+        type: DataType.DATE,
+        allowNull: false,
+    })
+    birthDay;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: true,
-  })
-  image;
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+        unique: true,
+    })
+    email;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    defaultValue: 'user',
-  })
-  role;
+    @Column({
+        type: DataType.ENUM('user', 'moderator', 'admin'),
+        allowNull: false,
+        defaultValue: 'user'
+    })
+    role;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  email;
+    @Column({
+        type: DataType.STRING,
+        allowNull: false,
+    })
+    password;
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  password;
-
-  @Column({
-    type: DataType.BOOLEAN,
-    allowNull: false,
-    defaultValue: false,
-  })
-  isNotify;
-
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: true,
-  })
-  canMessage;
-
-  @HasMany(() => CommentModel, 'userId')
-  comments;
+    @Column({
+        type: DataType.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+    })
+    isNotify;
 }
