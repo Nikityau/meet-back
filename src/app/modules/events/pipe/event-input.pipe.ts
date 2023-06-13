@@ -1,20 +1,17 @@
 import {
   ArgumentMetadata,
   BadRequestException,
-  HttpStatus,
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-
-import { ObjectSchema, AnyObjectSchema } from 'yup';
+import { AnyObjectSchema } from 'yup';
 
 @Injectable()
-export class UserCreateValidationPipe implements PipeTransform {
-  constructor(private schema: AnyObjectSchema) {}
-
+export class EventInputPipe implements PipeTransform {
+  constructor(private eventSchema: AnyObjectSchema) {}
   async transform(value: any, metadata: ArgumentMetadata) {
     try {
-      const isValid = await this.schema.validate(value);
+      const isValid = await this.eventSchema.validate(value);
 
       return value;
     } catch (e) {

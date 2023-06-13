@@ -1,27 +1,27 @@
 module.exports = {
-    async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('Images', {
-            id: {
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDV4,
-                primaryKey: true,
-            },
-            url: {
-                type: Sequelize.STRING,
-                allowNull: true,
-                defaultValue: null,
-            },
-            createdAt: {
-                type: Sequelize.DATE,
-                allowNull: false,
-            },
-            updatedAt: {
-                type: Sequelize.DATE,
-                allowNull: false,
-            },
-        })
-    },
-    async down(queryInterface) {
-        await queryInterface.dropTable('Images')
-    },
-}
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable('Images', {
+      id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+      },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: true,
+        defaultValue: null,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+    });
+  },
+  async down(queryInterface) {
+    await queryInterface.dropTable('Images');
+  },
+};

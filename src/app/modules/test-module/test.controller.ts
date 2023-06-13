@@ -14,7 +14,7 @@ import {
 } from '@nestjs/common';
 import { TestHttpExceptionFilter } from './test.exception';
 import { TestDTO } from './test.dto';
-import { TestTransformPipe, TestValidatePipe } from "./test.pipe";
+import { TestTransformPipe, TestValidatePipe } from './test.pipe';
 
 @Controller('test')
 export class TestController {

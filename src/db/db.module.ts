@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 
 import { UserModel } from './models/user.model';
-
+import { EventModel } from './models/event.model';
 
 const DB = {
   HOST: process.env.DB_HOST,
@@ -22,9 +22,7 @@ const DB = {
       password: DB.PASSWORD,
       database: DB.DB,
       synchronize: true,
-      models: [
-          UserModel
-      ],
+      models: [UserModel, EventModel],
     }),
   ],
 })

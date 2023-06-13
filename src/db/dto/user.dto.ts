@@ -2,7 +2,7 @@ export class UserDTO {
   id: string;
   name: string;
   surname: string;
-  patronymic: string | null
+  patronymic: string | null;
   gender: 'male' | 'female';
   birthDay: Date;
   role: 'admin' | 'moderator' | 'user';
