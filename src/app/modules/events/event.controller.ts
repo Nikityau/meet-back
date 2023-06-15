@@ -10,8 +10,8 @@ import {
   Put,
 } from '@nestjs/common';
 
-import { EventInputPipe } from './pipe/event-input.pipe';
 import { EventInputDTO, eventInputSchema } from './dto/event-input.dto';
+import { EventInputPipe } from './pipe/event-input.pipe';
 import { EventTimePipe } from './pipe/event-time.pipe';
 import { EventCreateService } from './services/event-create.service';
 import { EventGetService } from './services/event-get.service';
@@ -58,29 +58,17 @@ export class EventsController {
 
   @Get('all')
   async getAll() {
-    const events = await this.eventGetService.getAll();
-
-    return {
-      data: events,
-    };
+    return 'ok';
   }
 
   @Get('date')
   async getByDate(@Query('date') date: string) {
-    const events = await this.eventGetService.getByDate(date);
-
-    return {
-      data: events,
-    };
+    return 'ok';
   }
 
   @Get('current')
   async getCurrent() {
-    const events = await this.eventGetService.getCurrent();
-
-    return {
-      data: events,
-    };
+    return 'ok';
   }
 
   @Get('nearest')

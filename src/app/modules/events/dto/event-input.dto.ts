@@ -3,18 +3,25 @@ import { object, string, date, boolean } from 'yup';
 export class EventInputDTO {
   title: string;
   description: string;
-  startDate: any;
-  endDate: any;
+  date: {
+    startDate: string;
+    endDate?: string;
+    startTime: string;
+    endTime?: string;
+  };
   place: string;
   isArchive: boolean;
 }
 
-//timestamp mm:dd:yy hh:mm:ss example 2023:10:23 10:23:10
 export const eventInputSchema = object({
   title: string().required(),
   description: string().required(),
-  startDate: string().required(),
-  endDate: string().required(),
+  date: object({
+    startDate: date().required(),
+    startTime: string().required(),
+    endDate: date(),
+    endTime: string(),
+  }),
   place: string().required(),
   isArchive: boolean(),
 });

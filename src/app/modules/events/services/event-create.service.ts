@@ -11,16 +11,36 @@ export class EventCreateService {
     private eventModel: typeof EventModel,
   ) {}
 
-  async createEvent(eventInputDTO: EventInputDTO) {
-    const d = new Date()
+  async generateEventObject(eventInputDTO: EventInputDTO) {
+    const event = {
+      title: eventInputDTO.title,
+      description: eventInputDTO.description,
+      place: eventInputDTO.place,
+      isArchive: eventInputDTO.isArchive || false,
+      startDate: `${eventInputDTO.date.startDate} ${eventInputDTO.date.startTime}:00`,
+      endDate: null,
+    };
 
-    const event = await this.eventModel.create({
-      title: 'new',
-      description: 'ok',
-      place: 'a128',
-      startDate: d,
-      endDate: d,
-    });
+    let endDate = eventInputDTO.date.endDate;
+    let endTime = eventInputDTO.date.endTime;
+
+    if (!endDate) {
+      endDate = eventInputDTO.date.startDate;
+    }
+    if (!endTime) {
+      endTime = '24:00';
+    }
+
+    event.endDate = `${endDate} ${endTime}:00`;
+
+    return event;
+  }
+
+  async createEvent(eventInputDTO: EventInputDTO) {
+    const eventData = await this.generateEventObject(eventInputDTO);
+    console.log(eventData);
+
+    const event = await this.eventModel.create(eventData);
 
     return event;
   }

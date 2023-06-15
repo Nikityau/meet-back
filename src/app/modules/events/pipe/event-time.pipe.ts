@@ -9,29 +9,35 @@ import { EventInputDTO } from '../dto/event-input.dto';
 
 @Injectable()
 export class EventTimePipe implements PipeTransform {
-  async transform(value: EventInputDTO, metadata: ArgumentMetadata) {
-    const [startDate, startTime] = value.startDate.split(' ');
-    const [endDate, endTime] = value.endDate.split(' ');
-
-    const ds = new Date(startDate);
-    const de = new Date(endDate);
-
-    if (de < ds) {
-      throw new BadRequestException('endDate must be >= startDate', {
-        cause: new Error('date error'),
-        description: 'date error',
-      });
+  checkTime(startTime: string, endTime: string | undefined | null) {
+    if (!endTime) {
+      return;
     }
 
-    if (!startTime || !endTime) {
-      return value;
-    }
-    if (endTime < startTime) {
-      throw new BadRequestException('endTime must be >= startTime', {
+    if (startTime > endTime) {
+      throw new BadRequestException('startTime cannot be > endTime', {
         cause: new Error('time error'),
         description: 'time error',
       });
     }
+  }
+
+  async transform(value: EventInputDTO, metadata: ArgumentMetadata) {
+    const date = value.date;
+
+    if (!date.endDate) {
+      this.checkTime(date.startTime, date.endTime);
+      return value;
+    }
+
+    if (date.startDate > date.endDate) {
+      throw new BadRequestException('endDate cannot be > startDate', {
+        cause: new Error('time error'),
+        description: 'date error',
+      });
+    }
+
+    this.checkTime(date.startTime, date.endTime);
 
     return value;
   }
