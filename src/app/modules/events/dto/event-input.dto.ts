@@ -1,4 +1,4 @@
-import { object, string, date, boolean } from 'yup';
+import { object, string, date, boolean, array } from 'yup';
 
 export class EventInputDTO {
   title: string;
@@ -11,6 +11,7 @@ export class EventInputDTO {
   };
   place: string;
   isArchive: boolean;
+  tags: string[];
 }
 
 export const eventInputSchema = object({
@@ -24,6 +25,7 @@ export const eventInputSchema = object({
   }),
   place: string().required(),
   isArchive: boolean(),
+  tags: array().required(),
 });
 
 export const eventSettings = {

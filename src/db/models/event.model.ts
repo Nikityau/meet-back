@@ -1,8 +1,16 @@
-import { Column, DataType, Table } from 'sequelize-typescript';
+import {
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  Table,
+} from 'sequelize-typescript';
 
 import { BaseModel } from './base.model';
 
 import { EventDTO } from '../dto/event.dto';
+import { TagModel } from './tag.model';
+import { TagsEventsModel } from './tags-events.model';
 
 @Table({
   tableName: 'Events',
@@ -44,4 +52,7 @@ export class EventModel extends BaseModel<EventDTO> {
     defaultValue: false,
   })
   isArchive;
+
+  @BelongsToMany(() => TagModel, () => TagsEventsModel)
+  tags: TagModel[];
 }

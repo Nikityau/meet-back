@@ -9,10 +9,18 @@ module.exports = {
       eventId: {
         type: Sequelize.UUID,
         allowNull: false,
+        references: {
+          model: 'Events',
+          key: 'id',
+        },
       },
       tagId: {
         type: Sequelize.UUID,
         allowNull: false,
+        references: {
+          model: 'Tags',
+          key: 'id',
+        },
       },
       createdAt: {
         type: Sequelize.DATE,

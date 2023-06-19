@@ -6,5 +6,5 @@ export class BaseModel<T> extends Model<T> {
     defaultValue: DataType.UUIDV4,
     primaryKey: true,
   })
-  id;
+  declare id;
 }

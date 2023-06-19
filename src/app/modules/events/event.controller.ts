@@ -8,6 +8,7 @@ import {
   Query,
   Delete,
   Put,
+  Header,
 } from '@nestjs/common';
 
 import { EventInputDTO, eventInputSchema } from './dto/event-input.dto';
@@ -15,6 +16,7 @@ import { EventInputPipe } from './pipe/event-input.pipe';
 import { EventTimePipe } from './pipe/event-time.pipe';
 import { EventCreateService } from './services/event-create.service';
 import { EventGetService } from './services/event-get.service';
+import { EventTagPipe } from './pipe/event-tag.pipe';
 
 @Controller('events')
 export class EventsController {
@@ -24,6 +26,7 @@ export class EventsController {
   ) {}
 
   @Post('create')
+  @UsePipes(EventTagPipe)
   @UsePipes(new EventTimePipe())
   @UsePipes(new EventInputPipe(eventInputSchema))
   async createEvent(@Body() eventInputDTO: EventInputDTO) {
@@ -58,7 +61,11 @@ export class EventsController {
 
   @Get('all')
   async getAll() {
-    return 'ok';
+    const data = await this.eventGetService.getAll();
+
+    return {
+      data,
+    };
   }
 
   @Get('date')
