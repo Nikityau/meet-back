@@ -12,6 +12,7 @@ import { EventDTO } from '../dto/event.dto';
 import { TagModel } from './tag.model';
 import { TagsEventsModel } from './tags-events.model';
 
+
 @Table({
   tableName: 'Events',
 })

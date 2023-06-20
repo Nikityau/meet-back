@@ -1,8 +1,10 @@
-import { DataType, Table, Column } from 'sequelize-typescript';
+import { DataType, Table, Column, BelongsToMany } from 'sequelize-typescript';
 
 import { BaseModel } from './base.model';
 
 import { UserDTO } from '../dto/user.dto';
+import { OrganizationModel } from './organization.model';
+import { OrgMemberModel } from './org-member.model';
 
 @Table({
   tableName: 'Users',
@@ -65,4 +67,7 @@ export class UserModel extends BaseModel<UserDTO> {
     defaultValue: true,
   })
   isNotify;
+
+  @BelongsToMany(() => OrganizationModel, () => OrgMemberModel)
+  organizations: OrganizationModel[];
 }
