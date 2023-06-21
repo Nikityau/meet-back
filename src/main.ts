@@ -1,29 +1,17 @@
-import 'dotenv/config';
-import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
 
-import { MainModule } from './main.module';
 
-const PORT = process.env.PORT;
+async function main() {
+    const app = await NestFactory.create(AppModule);
 
-async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(MainModule);
+    const PORT = process.env.PORT || 5000;
 
-  const config = new DocumentBuilder()
-    .setTitle('Meet')
-    .setDescription('Meet API description')
-    .setVersion('0.0')
-    .addTag('meet')
-    .build();
+    app.setGlobalPrefix('api')
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-
-  app.setGlobalPrefix('api');
-
-  await app.listen(PORT, () => {
-    console.log(`Server work on ${PORT} port`);
-  });
+    await app.listen(PORT, () => {
+        console.log(`Server run on ${PORT} port`);
+    });
 }
-bootstrap();
+
+main()
