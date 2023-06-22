@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put } from "@nestjs/common";
 import { TagsService } from "./tags.service";
 import { CreateTagDto } from "./dto/create-tag.dto";
 
@@ -20,5 +20,10 @@ export class TagsController {
   @Get('all')
   async getAll() {
     return await this.tagsService.getAll()
+  }
+
+  @Put('upd')
+  async upd() {
+
   }
 }

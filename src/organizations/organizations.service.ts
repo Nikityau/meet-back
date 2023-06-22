@@ -4,13 +4,21 @@ import { OrganizationsModel } from "./organizations.model";
 import { CreateOrgDto } from "./dto/create-org.dto";
 import { AddStaffDto } from "./dto/add-staff.dto";
 import { UserService } from "../users/user.service";
+import { AddStaffRoleDto } from "./dto/add-staff-role.dto";
+import { RolesService } from "../roles/roles.service";
+import { OrgStaffModel } from "../org-staff/org-staff.model";
+import { UserModel } from "../users/user.model";
+import { OrgStaffRolesModel } from "../org-staff/org-staff-roles.model";
+import { RolesModel } from "../roles/roles.model";
 
 @Injectable()
 export class OrganizationsService {
 
   constructor(
     @InjectModel(OrganizationsModel) private orgRep: typeof OrganizationsModel,
-    private userService: UserService
+    @InjectModel(OrgStaffModel) private orgStaff: typeof OrgStaffModel,
+    private userService: UserService,
+    private roleService: RolesService,
   ) {
   }
 
@@ -18,35 +26,78 @@ export class OrganizationsService {
     return await this.orgRep.create(dto)
   }
 
+  async getStaff(orgId: string) {
+    return []
+  }
+
+
+  async getFullOrgData(orgId: string) {
+    return {
+
+    }
+  }
+
+  async getOrgById(orgId: string) {
+    return await this.orgRep.findByPk(orgId)
+  }
+
   async getAll() {
-    return await this.orgRep.findAll({
-      attributes: {
-        exclude: [
-          'createdAt',
-          'updatedAt'
-        ]
-      },
-      include: {
-        all: true,
-        attributes: {
-          exclude: [
-            'createdAt',
-            'updatedAt'
-          ]
+    const orgs = await this.orgRep.findAll({
+      include: [
+        {
+          model: UserModel,
+          through:  {
+            as: 'organization_role',
+            attributes: [
+              'id',
+              'role'
+            ]
+          }
         }
-      }
+      ]
     })
+
+    return orgs
   }
 
   async addStaff(dto: AddStaffDto) {
-    const user = await this.userService.getById(dto.userId);
-    const org = await this.orgRep.findByPk(dto.orgId);
+    const org = await this.orgRep.findByPk(dto.orgId)
+    const user = await this.userService.getById(dto.userId)
 
-    if(user && org) {
-      await org.$add('staff', user.id)
-      return dto
+    const staff = await this.orgStaff.findOne({
+      where: {
+        orgId: dto.orgId,
+        userId: dto.userId,
+      }
+    })
+
+    if(staff) {
+      return {
+        status: 'already exist',
+        data: staff
+      }
     }
 
-    throw new HttpException('org or user not found', HttpStatus.NOT_FOUND)
+    const inst = await this.orgStaff.create({
+      orgId: org.id,
+      userId: user.id,
+      role: 'admin'
+    })
+
+    return dto
+  }
+
+
+  async setStaffRole(dto: AddStaffRoleDto) {
+    const staff = await this.orgStaff.update({
+      role: dto.role
+    }, {
+      where: {
+        orgId: dto.orgId,
+        userId: dto.userId,
+      }
+    })
+
+    return dto
   }
 }

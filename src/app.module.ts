@@ -16,6 +16,8 @@ import { OrganizationsModule } from "./organizations/organizations.module";
 import { OrganizationsModel } from "./organizations/organizations.model";
 import { OrgStaffModel } from "./org-staff/org-staff.model";
 import { UserEventsModel } from "./users/user-events.model";
+import { OrgStaffRolesModel } from "./org-staff/org-staff-roles.model";
+import { BaseCrudService } from "./shared/base-crud.service";
 
 @Module({
   imports: [
@@ -39,6 +41,7 @@ import { UserEventsModel } from "./users/user-events.model";
         TagsModel,
         OrganizationsModel,
         OrgStaffModel,
+        OrgStaffRolesModel
       ],
       autoLoadModels: true,
     }),
@@ -47,6 +50,6 @@ import { UserEventsModel } from "./users/user-events.model";
     TagsModule,
     EventsModule,
     OrganizationsModule
-  ]
+  ],
 })
 export class AppModule {}

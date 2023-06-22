@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UserService } from "./user.service";
 import { AddRoleDto } from "./dto/add-role.dto";
@@ -23,8 +23,14 @@ export class UserController {
     return await this.userService.getAll()
   }
 
-  @Post('role')
-  async addRole(@Body() dto: AddRoleDto) {
-    return await this.userService.addRole(dto)
+
+  @Get(':id')
+  async getById(@Param('id') id: string) {
+    return await this.userService.getById(id)
+  }
+
+  @Post('set-role')
+  async setRole(@Body() dto: AddRoleDto) {
+    return await this.userService.setRole(dto)
   }
 }

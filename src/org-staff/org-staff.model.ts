@@ -3,7 +3,9 @@ import { OrganizationsModel } from "../organizations/organizations.model";
 import { UserModel } from "../users/user.model";
 
 interface OrgStaffCreationAttrs {
-
+  userId: string;
+  orgId: string;
+  role: 'user' | 'moderator' | 'admin';
 }
 
 @Table({
@@ -30,4 +32,10 @@ export class OrgStaffModel extends Model<OrgStaffModel, OrgStaffCreationAttrs> {
     allowNull: false,
   })
   userId;
+
+  @Column({
+    type: DataType.ENUM('user', 'moderator', 'admin'),
+    defaultValue: 'user'
+  })
+  role;
 }

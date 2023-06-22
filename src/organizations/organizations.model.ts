@@ -34,6 +34,4 @@ export class OrganizationsModel extends Model<OrganizationsModel, OrgCreationAtt
 
   @BelongsToMany(() => UserModel, () => OrgStaffModel)
   staff: UserModel[];
-
-
 }

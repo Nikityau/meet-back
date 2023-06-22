@@ -16,7 +16,7 @@ export class RolesModel extends Model<RolesModel, RoleCreationAttrs>{
   id;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.ENUM('user', 'moderator', 'admin'),
     unique: true,
     allowNull: false,
   })
