@@ -4,12 +4,14 @@ import { OrganizationsModel } from "./organizations.model";
 import { CreateOrgDto } from "./dto/create-org.dto";
 import { AddStaffDto } from "./dto/add-staff.dto";
 import { UserService } from "../users/user.service";
-import { AddStaffRoleDto } from "./dto/add-staff-role.dto";
+import { SetStaffRoleDto } from "./dto/set-staff-role.dto";
 import { RolesService } from "../roles/roles.service";
 import { OrgStaffModel } from "../org-staff/org-staff.model";
 import { UserModel } from "../users/user.model";
-import { OrgStaffRolesModel } from "../org-staff/org-staff-roles.model";
-import { RolesModel } from "../roles/roles.model";
+import { RemoveStaffDto } from "./dto/remove-staff.dto";
+import { dbFetchSettings } from "../shared/db-fetch-settings";
+import { EventsModel } from "../events/events.model";
+import { DeleteOrgDto } from "./dto/delete-org.dto";
 
 @Injectable()
 export class OrganizationsService {
@@ -30,19 +32,15 @@ export class OrganizationsService {
     return []
   }
 
-
-  async getFullOrgData(orgId: string) {
-    return {
-
-    }
-  }
-
   async getOrgById(orgId: string) {
     return await this.orgRep.findByPk(orgId)
   }
 
   async getAll() {
     const orgs = await this.orgRep.findAll({
+      attributes: {
+        exclude: dbFetchSettings.attrs.exclude
+      },
       include: [
         {
           model: UserModel,
@@ -53,6 +51,9 @@ export class OrganizationsService {
               'role'
             ]
           }
+        },
+        {
+          model: EventsModel,
         }
       ]
     })
@@ -63,6 +64,10 @@ export class OrganizationsService {
   async addStaff(dto: AddStaffDto) {
     const org = await this.orgRep.findByPk(dto.orgId)
     const user = await this.userService.getById(dto.userId)
+
+    if(!org || !user) {
+      throw new HttpException('org or user not found', HttpStatus.NOT_FOUND)
+    }
 
     const staff = await this.orgStaff.findOne({
       where: {
@@ -78,17 +83,33 @@ export class OrganizationsService {
       }
     }
 
-    const inst = await this.orgStaff.create({
+    await this.orgStaff.create({
       orgId: org.id,
       userId: user.id,
-      role: 'admin'
+      role: dto.role
     })
 
     return dto
   }
 
+  async removeStaff(dto: RemoveStaffDto) {
+    const staff = await this.orgStaff.findOne({
+      where: {
+        orgId: dto.orgId,
+        userId: dto.staffId,
+      }
+    })
 
-  async setStaffRole(dto: AddStaffRoleDto) {
+    if(!staff) {
+      throw new HttpException('staff or organization do not exist', HttpStatus.NOT_FOUND)
+    }
+
+    await staff.destroy()
+
+    return dto;
+  }
+
+  async setStaffRole(dto: SetStaffRoleDto) {
     const staff = await this.orgStaff.update({
       role: dto.role
     }, {
@@ -99,5 +120,21 @@ export class OrganizationsService {
     })
 
     return dto
+  }
+
+  async delete(dto: DeleteOrgDto) {
+    const org = await this.orgRep.findByPk(dto.orgId);
+    if(!org) {
+      throw new HttpException('org not found', HttpStatus.NOT_FOUND)
+    }
+
+    await this.orgStaff.destroy({
+      where: {
+        orgId: org.id
+      }
+    })
+    await org.destroy()
+
+    return dto;
   }
 }

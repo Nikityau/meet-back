@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { OrganizationsService } from "./organizations.service";
 import { CreateOrgDto } from "./dto/create-org.dto";
 import { AddStaffDto } from "./dto/add-staff.dto";
-import { AddStaffRoleDto } from "./dto/add-staff-role.dto";
+import { SetStaffRoleDto } from "./dto/set-staff-role.dto";
+import { RemoveStaffDto } from "./dto/remove-staff.dto";
+import { DeleteOrgDto } from "./dto/delete-org.dto";
 
 @Controller('organizations')
 export class OrganizationsController {
@@ -37,9 +39,19 @@ export class OrganizationsController {
     return await this.orgsService.addStaff(dto)
   }
 
+  @Delete('staff')
+  async removeStaff(@Body() dto: RemoveStaffDto) {
+    await this.orgsService.removeStaff(dto);
+  }
+
   @Post('staff/role')
-  async addStaffRole(@Body() dto: AddStaffRoleDto) {
+  async addStaffRole(@Body() dto: SetStaffRoleDto) {
     return await this.orgsService.setStaffRole(dto);
+  }
+
+  @Delete('delete')
+  async delete(@Body() dto: DeleteOrgDto) {
+    return await this.orgsService.delete(dto)
   }
 
 }

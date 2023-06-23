@@ -12,7 +12,7 @@ export class UserRolesModel extends Model<UserRolesModel>{
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
 
   @ForeignKey(() => RolesModel)

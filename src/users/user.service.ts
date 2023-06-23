@@ -2,12 +2,13 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UserModel } from "./user.model";
-import { AddRoleDto } from "./dto/add-role.dto";
+import { SetRoleDto } from "./dto/set-role.dto";
 import { RolesService } from "../roles/roles.service";
 import { RolesModel } from "../roles/roles.model";
 import { EventsModel } from "../events/events.model";
 import { OrganizationsModel } from "../organizations/organizations.model";
 import { dbFetchSettings } from "../shared/db-fetch-settings";
+import { DeleteUserDto } from "./dto/delete-user.dto";
 
 @Injectable()
 export class UserService {
@@ -19,10 +20,7 @@ export class UserService {
   }
 
   async createUser(dto: CreateUserDto) {
-    const user = await this.userRep.create(dto)
-    const role = await this.rolesService.getRole('user')
-
-    await user.$set('role', role.id)
+    const user = await this.userRep.create(dto);
 
     return user;
   }
@@ -31,32 +29,23 @@ export class UserService {
     return await this.userRep.findAll({
       include: [
         {
-          model: RolesModel,
+          model: OrganizationsModel,
           through: {
-            attributes: []
+            as: "role",
+            paranoid: true
           },
           attributes: {
             exclude: dbFetchSettings.attrs.exclude
           }
         },
         {
-          model: OrganizationsModel,
-          through: {
-            as: 'role',
-            paranoid: true
-          },
-          attributes: {
-            exclude: dbFetchSettings.attrs.exclude
-          },
-        },
-        {
-          model: EventsModel,
+          model: EventsModel
         }
       ],
       attributes: {
         exclude: dbFetchSettings.attrs.exclude
       }
-    })
+    });
   }
 
   async getById(id: string) {
@@ -74,32 +63,42 @@ export class UserService {
         {
           model: OrganizationsModel,
           through: {
-            as: 'role',
+            as: "role",
             paranoid: true
           },
           attributes: {
             exclude: dbFetchSettings.attrs.exclude
-          },
+          }
         },
         {
-          model: EventsModel,
+          model: EventsModel
         }
       ],
       attributes: {
         exclude: dbFetchSettings.attrs.exclude
       }
-    })
+    });
   }
 
-  async setRole(dto: AddRoleDto) {
-    const user = await  this.userRep.findByPk(dto.userId)
-    const role = await this.rolesService.getRole(dto.role)
+  async setRole(dto: SetRoleDto) {
+    const user = await this.userRep.findByPk(dto.userId);
 
-    if(user && role) {
-      await user.$set('role', role.id);
+    if (user) {
+      await user.set("role", dto.role);
+
       return dto;
     }
 
-    throw new HttpException('Пользователь или роль не найдены', HttpStatus.NOT_FOUND);
+
+    throw new HttpException("Пользователь не найдены", HttpStatus.NOT_FOUND);
+  }
+
+  async deleteUser(dto: DeleteUserDto) {
+    const user = await this.userRep.findByPk(dto.userId);
+    const role = await user.$get("role");
+
+    await user.$remove("role", role.id);
+
+    return dto;
   }
 }

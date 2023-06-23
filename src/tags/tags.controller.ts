@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Post, Put } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put, UsePipes } from "@nestjs/common";
 import { TagsService } from "./tags.service";
 import { CreateTagDto } from "./dto/create-tag.dto";
+import { ValidationDataPipe } from "../helpers/pipes/validation-data.pipe";
+import { UpdTagDto } from "./dto/upd-tag.dto";
 
 @Controller('tags')
 export class TagsController {
@@ -23,7 +25,7 @@ export class TagsController {
   }
 
   @Put('upd')
-  async upd() {
-
+  async upd(@Body() dto: UpdTagDto) {
+    return await this.tagsService.updTag(dto)
   }
 }

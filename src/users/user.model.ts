@@ -24,7 +24,7 @@ export class UserModel extends Model<UserModel, UserCreationAttrs> {
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @Column({
     type: DataType.STRING,
@@ -59,8 +59,12 @@ export class UserModel extends Model<UserModel, UserCreationAttrs> {
   })
   password;
 
-  @BelongsToMany(() => RolesModel, () => UserRolesModel)
-  role: RolesModel;
+  @Column({
+    type: DataType.ENUM('user', 'moderator', 'admin'),
+    allowNull: false,
+    defaultValue: 'user'
+  })
+  role;
 
   @BelongsToMany(() => OrganizationsModel, () => OrgStaffModel)
   organizations: OrganizationsModel[];

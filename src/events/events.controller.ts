@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post } from "@nestjs/common";
 import { CreateEventDto } from "./dto/create-event.dto";
 import { EventsService } from "./events.service";
 import { AddEventTagDto } from "./dto/add-event-tag.dto";
@@ -24,5 +24,10 @@ export class EventsController {
   @Post('tag')
   async addTag(@Body() dto: AddEventTagDto) {
     return await this.eventsService.addEventTag(dto)
+  }
+
+  @Delete('tag')
+  async removeTag(@Body() dto: AddEventTagDto) {
+    return await this.eventsService.removeEventTag(dto);
   }
 }

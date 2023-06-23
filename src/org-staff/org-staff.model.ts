@@ -17,7 +17,7 @@ export class OrgStaffModel extends Model<OrgStaffModel, OrgStaffCreationAttrs> {
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @ForeignKey(() => OrganizationsModel)
   @Column({

@@ -14,13 +14,16 @@ import { OrgStaffModel } from "../org-staff/org-staff.model";
       OrgStaffModel
     ]),
     UserModule,
-    RolesModule
+    RolesModule,
   ],
   providers: [
     OrganizationsService
   ],
   controllers: [
     OrganizationsController
+  ],
+  exports: [
+    OrganizationsService
   ]
 })
 export class OrganizationsModule {}

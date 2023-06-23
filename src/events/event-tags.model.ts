@@ -11,7 +11,7 @@ export class EventTagsModel extends Model<EventTagsModel> {
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @ForeignKey(() => TagsModel)
   @Column({

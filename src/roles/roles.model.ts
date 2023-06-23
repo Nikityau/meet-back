@@ -13,7 +13,7 @@ export class RolesModel extends Model<RolesModel, RoleCreationAttrs>{
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @Column({
     type: DataType.ENUM('user', 'moderator', 'admin'),

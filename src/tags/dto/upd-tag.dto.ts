@@ -1,3 +1,10 @@
+import { IsString, IsUUID } from "class-validator";
+
 export class UpdTagDto {
-  // tomorrow
+
+  @IsUUID()
+  tagId: string;
+
+  @IsString()
+  value;
 }

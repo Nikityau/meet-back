@@ -16,8 +16,30 @@ import { OrganizationsModule } from "./organizations/organizations.module";
 import { OrganizationsModel } from "./organizations/organizations.model";
 import { OrgStaffModel } from "./org-staff/org-staff.model";
 import { UserEventsModel } from "./users/user-events.model";
-import { OrgStaffRolesModel } from "./org-staff/org-staff-roles.model";
 import { BaseCrudService } from "./shared/base-crud.service";
+
+
+const AdminModule = import("@adminjs/nestjs");
+(async () => {
+  const AdminJs = await import('adminjs')
+  const seq = await import('@adminjs/sequelize')
+  AdminJs.AdminJS.registerAdapter({
+    Resource: seq.Resource,
+    Database: seq.Database
+  })
+})()
+
+const DEFAULT_ADMIN = {
+  email: "admin@example.com",
+  password: "password"
+};
+
+const authenticate = async (email: string, password: string) => {
+  if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+    return Promise.resolve(DEFAULT_ADMIN);
+  }
+  return null;
+};
 
 @Module({
   imports: [
@@ -41,15 +63,31 @@ import { BaseCrudService } from "./shared/base-crud.service";
         TagsModel,
         OrganizationsModel,
         OrgStaffModel,
-        OrgStaffRolesModel
       ],
-      autoLoadModels: true,
+      autoLoadModels: true
     }),
+    AdminModule.then(({ AdminModule }) => AdminModule.createAdmin({
+      adminJsOptions: {
+        rootPath: "/admin",
+        resources: [
+          UserModel,
+          RolesModel,
+          UserRolesModel,
+          EventsModel,
+          EventTagsModel,
+          UserEventsModel,
+          TagsModel,
+          OrganizationsModel,
+          OrgStaffModel,
+        ]
+      }
+    })),
     UserModule,
     RolesModule,
     TagsModule,
     EventsModule,
     OrganizationsModule
-  ],
+  ]
 })
-export class AppModule {}
+export class AppModule {
+}

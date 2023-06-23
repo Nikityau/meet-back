@@ -7,6 +7,7 @@ import { UserController } from "./user.controller";
 import { UserService } from "./user.service";
 import { RolesModule } from "../roles/roles.module";
 import { UserEventsModel } from "./user-events.model";
+import { OrganizationsModule } from "../organizations/organizations.module";
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { UserEventsModel } from "./user-events.model";
       UserRolesModel,
       UserEventsModel
     ]),
-    RolesModule
+    RolesModule,
   ],
   controllers: [
     UserController

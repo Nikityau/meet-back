@@ -12,10 +12,11 @@ interface EventCreationAttrs {
   startDate: Date;
   endDate: Date;
   isArchive?: boolean;
+  slug: string;
 }
 
 @Table({
-    tableName: 'events'
+  tableName: "events"
 })
 export class EventsModel extends Model<EventsModule, EventCreationAttrs> {
   @Column({
@@ -23,42 +24,49 @@ export class EventsModel extends Model<EventsModule, EventCreationAttrs> {
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    unique: true,
+  })
+  slug;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false
   })
   title;
 
   @Column({
     type: DataType.TEXT,
-    allowNull: false,
+    allowNull: false
   })
   description;
 
   @Column({
     type: DataType.STRING,
-    allowNull: false,
+    allowNull: false
   })
   location;
 
   @Column({
     type: DataType.DATE,
-    allowNull: false,
+    allowNull: false
   })
   startDate;
 
   @Column({
     type: DataType.DATE,
-    allowNull: false,
+    allowNull: false
   })
   endDate;
 
   @Column({
     type: DataType.BOOLEAN,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: false
   })
   isArchive;
 

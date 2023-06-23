@@ -1,6 +1,8 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 import { UserModel } from "../users/user.model";
 import { OrgStaffModel } from "../org-staff/org-staff.model";
+import { EventsModel } from "../events/events.model";
+import { UserEventsModel } from "../users/user-events.model";
 
 
 interface OrgCreationAttrs {
@@ -17,7 +19,7 @@ export class OrganizationsModel extends Model<OrganizationsModel, OrgCreationAtt
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @Column({
     type: DataType.STRING,
@@ -34,4 +36,7 @@ export class OrganizationsModel extends Model<OrganizationsModel, OrgCreationAtt
 
   @BelongsToMany(() => UserModel, () => OrgStaffModel)
   staff: UserModel[];
+
+  @BelongsToMany(() => EventsModel, () => UserEventsModel)
+  events: EventsModel[];
 }

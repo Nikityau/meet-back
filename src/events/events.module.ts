@@ -6,6 +6,8 @@ import { EventsService } from "./events.service";
 import { EventsController } from "./events.controller";
 import { EventsModel } from "./events.model";
 import { UserEventsModel } from "../users/user-events.model";
+import { UserModule } from "../users/user.module";
+import { OrganizationsModule } from "../organizations/organizations.module";
 
 @Module({
   imports: [
@@ -14,7 +16,9 @@ import { UserEventsModel } from "../users/user-events.model";
       EventsModel,
       UserEventsModel,
     ]),
-    TagsModule
+    TagsModule,
+    UserModule,
+    OrganizationsModule
   ],
   providers: [
     EventsService

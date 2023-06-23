@@ -18,7 +18,7 @@ export class UserEventsModel extends Model<UserEventsModel, UserEventCreationAtt
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @ForeignKey(() => UserModel)
   @Column( {

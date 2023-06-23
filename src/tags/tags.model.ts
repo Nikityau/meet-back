@@ -16,7 +16,7 @@ export class TagsModel extends Model<TagsModel, TagCreationAttrs> {
     primaryKey: true,
     defaultValue: DataType.UUIDV4
   })
-  id;
+  declare id;
 
   @Column({
     type: DataType.STRING,
