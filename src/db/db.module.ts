@@ -1,6 +1,12 @@
 import {Module} from "@nestjs/common";
 import {SequelizeModule} from "@nestjs/sequelize";
 import {EventModel} from "./models/event.model";
+import {TagModel} from "./models/tag.model";
+import {UserModel} from "./models/user.model";
+import {EventsOrgsModel} from "./relations/events-orgs.model";
+import {ImageModel} from "./models/image.model";
+import {EventTagsModel} from "./relations/event-tags.model";
+import {EventsImgsModel} from "./relations/events-imgs.model";
 
 @Module({
     imports: [
@@ -13,7 +19,13 @@ import {EventModel} from "./models/event.model";
             database: process.env.DB_DATABASE,
             autoLoadModels: true,
             models: [
-                EventModel
+                EventModel,
+                UserModel,
+                TagModel,
+                ImageModel,
+                EventsOrgsModel,
+                EventTagsModel,
+                EventsImgsModel,
             ]
         })
     ]
