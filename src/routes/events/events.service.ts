@@ -4,6 +4,7 @@ import {EventModel} from "../../db/models/event.model";
 import {UserModel} from "../../db/models/user.model";
 import {TagModel} from "../../db/models/tag.model";
 import {ImageModel} from "../../db/models/image.model";
+import {CommentsModel} from "../../db/models/comments.model";
 import {FindOptions, Op} from "sequelize";
 import {FilterDto} from "./dto/filter.dto";
 
@@ -47,6 +48,15 @@ export class EventsService {
             through: {
                 attributes: []
             }
+        },
+        {
+            model: CommentsModel,
+            attributes: {
+                exclude: [
+                    'createdAt',
+                    'updatedAt'
+                ]
+            },
         }
     ]
     attrs = {
@@ -136,4 +146,12 @@ export class EventsService {
             }
         })
     }
+
+    async getById(id: string) {
+        return await this.eventModel.findByPk(id, {
+            include: this.includeOptions,
+            attributes: this.attrs
+        })
+    }
+
 }

@@ -1,4 +1,4 @@
-import {Body, Controller, Get} from "@nestjs/common";
+import {Body, Controller, Get, Param} from "@nestjs/common";
 import {EventsService} from "./events.service";
 import {FilterDto} from "./dto/filter.dto";
 
@@ -33,5 +33,10 @@ export class EventsController {
     @Get('/archive')
     async getArchive() {
         return await this.eventService.getArchive()
+    }
+
+    @Get('/:id')
+    async getById(@Param('id') id: string) {
+        return await this.eventService.getById(id)
     }
 }

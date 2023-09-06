@@ -6,6 +6,7 @@ import {EventsOrgsModel} from "../db/relations/events-orgs.model";
 import {ImageModel} from "../db/models/image.model";
 import {EventTagsModel} from "../db/relations/event-tags.model";
 import {EventsImgsModel} from "../db/relations/events-imgs.model";
+import {CommentsModel} from "../db/models/comments.model";
 
 
 const AdminJsModule = import("@adminjs/nestjs");
@@ -40,6 +41,7 @@ const authenticate = async (email: string, password: string) => {
                     TagModel,
                     UserModel,
                     ImageModel,
+                    CommentsModel,
                     EventsOrgsModel,
                     EventTagsModel,
                     EventsImgsModel,

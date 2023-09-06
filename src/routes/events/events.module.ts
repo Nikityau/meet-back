@@ -6,6 +6,7 @@ import {EventModel} from "../../db/models/event.model";
 import {ImageModel} from "../../db/models/image.model";
 import {TagModel} from "../../db/models/tag.model";
 import {UserModel} from "../../db/models/user.model";
+import {CommentsModel} from "../../db/models/comments.model";
 
 @Module({
     imports: [
@@ -13,7 +14,8 @@ import {UserModel} from "../../db/models/user.model";
             EventModel,
             ImageModel,
             TagModel,
-            UserModel
+            UserModel,
+            CommentsModel
         ])
     ],
     controllers: [

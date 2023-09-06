@@ -7,6 +7,7 @@ import {EventsOrgsModel} from "./relations/events-orgs.model";
 import {ImageModel} from "./models/image.model";
 import {EventTagsModel} from "./relations/event-tags.model";
 import {EventsImgsModel} from "./relations/events-imgs.model";
+import {CommentsModel} from "./models/comments.model";
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import {EventsImgsModel} from "./relations/events-imgs.model";
                 UserModel,
                 TagModel,
                 ImageModel,
+                CommentsModel,
                 EventsOrgsModel,
                 EventTagsModel,
                 EventsImgsModel,

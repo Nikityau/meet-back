@@ -1,10 +1,11 @@
-import {BelongsToMany, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {BelongsToMany, Column, DataType, HasMany, Model, PrimaryKey, Table} from "sequelize-typescript";
 import {TagModel} from "./tag.model";
 import {UserModel} from "./user.model";
 import {EventsOrgsModel} from "../relations/events-orgs.model";
 import {EventTagsModel} from "../relations/event-tags.model";
 import {ImageModel} from "./image.model";
 import {EventsImgsModel} from "../relations/events-imgs.model";
+import {CommentsModel} from "./comments.model";
 
 interface EventModelAttrs {
     id: string,
@@ -84,4 +85,7 @@ export class EventModel extends Model<EventModel, EventModelAttrs> {
 
     @BelongsToMany(() => ImageModel, () => EventsImgsModel)
     gallery: ImageModel[];
+
+    @HasMany(() => CommentsModel)
+    comments: CommentsModel[];
 }
