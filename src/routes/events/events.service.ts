@@ -154,4 +154,20 @@ export class EventsService {
         })
     }
 
+    async test() {
+        return await this.eventModel.findAll({
+            include: [
+                {
+                    model: TagModel,
+                    where: {
+                        $and: [
+                            {
+                                tag: 'it'
+                            }
+                        ]
+                    }
+                }
+            ]
+        })
+    }
 }

@@ -39,4 +39,9 @@ export class EventsController {
     async getById(@Param('id') id: string) {
         return await this.eventService.getById(id)
     }
+
+    @Get('/test')
+    async test() {
+        return await this.eventService.test()
+    }
 }
